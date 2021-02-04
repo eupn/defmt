@@ -410,11 +410,7 @@ fn fields(
                         "?".to_string()
                     });
                     if let Some(ident) = f.ident.as_ref() {
-                        if ty == "str" {
-                            core::write!(format, "{}: {{={}:?}}", ident, ty).ok();
-                        } else {
-                            core::write!(format, "{}: {{={}}}", ident, ty).ok();
-                        }
+                        core::write!(format, "{}: {{={}:?}}", ident, ty).ok();
 
                         if ty == "?" {
                             list.push(quote!(f.inner.fmt(#ident, false)));
