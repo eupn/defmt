@@ -269,7 +269,13 @@ fn format_args_real(
                                     format_u128(bitfields as u128, hint, &mut buf)?;
                                 }
                             }
-                            _ => format_u128(*x as u128, hint, &mut buf)?,
+                            _ => {
+                                if let Some(DisplayHint::Debug) = hint {
+                                    format_u128(*x as u128, parent_hint, &mut buf)?;
+                                } else {
+                                    format_u128(*x as u128, hint, &mut buf)?;
+                                }
+                            }
                         }
                     }
                     Arg::Ixx(x) => format_i128(*x as i128, hint, &mut buf)?,
